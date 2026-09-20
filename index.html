@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Terminal Portfolyo</title>
+    <style>
+        body {
+            background-color: #0c0c0c;
+            color: #00ff66;
+            font-family: 'Courier New', Courier, monospace;
+            padding: 20px;
+            margin: 0;
+        }
+        #terminal {
+            max-width: 800px;
+            margin: auto;
+            white-space: pre-wrap;
+        }
+        input {
+            background: transparent;
+            border: none;
+            color: #00ff66;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 16px;
+            outline: none;
+            width: 80%;
+        }
+        .output {
+            margin-bottom: 10px;
+        }
+        .prompt-user {
+            color: #00ffff;
+        }
+    </style>
+</head>
+<body>
+
+<div id="terminal">
+    <div class="output" style="color: #ffcc00;">✨ Hoş geldin! Komut satırına <b style="color: #ff00ff;">help</b> yazarak başlayabilirsin. ✨</div>
+    <div id="history"></div>
+    <div><span class="prompt-user">dilay@portfolio:~$ </span><input type="text" id="commandInput" autofocus></div>
+</div>
+
+<script>
+    const input = document.getElementById('commandInput');
+    const history = document.getElementById('history');
+
+    const commands = {
+        help: "<span style='color: #00ffff;'>Kullanılabilir komutlar:</span>\n - <span style='color: #ff00ff;'>about</span>: Hakkımda bilgi\n - <span style='color: #ff00ff;'>skills</span>: Yetenekler ve teknolojiler\n - <span style='color: #ff00ff;'>projects</span>: Projelerim\n - <span style='color: #ff00ff;'>contact</span>: İletişim bilgileri\n - <span style='color: #ff00ff;'>flower</span>: Sürpriz çiçek\n - <span style='color: #ff00ff;'>vintage</span>: Angora Shore ruhu\n - <span style='color: #ff00ff;'>stats</span>: Eğlenceli istatistik\n - <span style='color: #ff00ff;'>clear</span>: Ekranı temizle",
+        about: "Merhaba! Ben istatistik okuyan, veri ve yaratıcı teknolojilerle ilgilenen bir geliştiriciyim.",
+        skills: "Yetenekler: Python, R, SPSS, JavaScript, Veri Analizi, Web Tasarım",
+        projects: "Projeler:\n 1. KinetikKit (Hatay STEM Projesi)\n 2. Angora Shore (Vintage E-Ticaret Girişimi)",
+        contact: "E-posta: dilapinar23@gmail.com\n GitHub: github.com/diloyylo",
+        flower: "<span style='color: #ff77ff;'>   ( )\n    ||\n  _\\||/_\n ('    ')\n  `----'</span>",
+        vintage: "<span style='color: #ffaa00;'>🧥 Angora Shore: Geçmişin zarafetini bugünün dijital dünyasıyla buluşturuyoruz!</span>",
+        stats: "<span style='color: #00ffff;'>📊 Güncel Veri Analizi:\n - %99 Kod yazma isteği\n - %1 'Acaba nerede hata yaptım?' paniği</span>"
+    };
+
+    input.addEventListener('keypress', function(e) {
+        if (e.key === 'Enter') {
+            const cmd = input.value.trim().toLowerCase();
+            let response = "";
+
+            if (cmd === 'clear') {
+                history.innerHTML = "";
+                input.value = "";
+                return;
+            } else if (commands[cmd]) {
+                response = commands[cmd];
+            } else if (cmd === "") {
+                response = "";
+            } else {
+                response = `<span style='color: #ff4444;'>Komut bulunamadı: "${cmd}". Yardımlar için 'help' yazabilirsin.</span>`;
+            }
+
+            history.innerHTML += `<div><span class="prompt-user">dilay@portfolio:~$</span> ${input.value}</div><div>${response}</div><br>`;
+            input.value = "";
+            window.scrollTo(0, document.body.scrollHeight);
+        }
+    });
+</script>
+
+</body>
+</html>
